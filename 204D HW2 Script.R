@@ -1,0 +1,13 @@
+dpath='~/Desktop/204D/lab2.csv'
+mydata<-read.csv(dpath,header=TRUE, sep=',')
+head(mydata)
+mydata$group=as.factor(mydata$group)
+class(mydata$group); class(mydata$attended)
+complete.cases(mydata)
+boxplot(mydata$attended~mydata$group, main="boxplot of attended by group", xlab="group", ylab="attended")
+mod1<-aov(attended~group, data=mydata)
+summary(mod1)
+plot(mod1)
+bartlett.test(attended~group, data=mydata)
+mod2<-lm(attended~group, data=mydata)
+summary(mod2)

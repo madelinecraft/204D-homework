@@ -1,0 +1,17 @@
+library('foreign')
+data=read.spss('~/Downloads/ch3labs2.sav', to.data.frame=TRUE)
+write.csv(data,file='~/Desktop/ch3labs2.csv')
+data
+data$attract=as.factor(data$attract)
+data$time=as.factor(data$time)
+summary(data)
+interaction.plot(data$attract, data$time, data$labs, type="b", col=c(1:3), leg.bty="o", leg.bg="beige", lwd=2, pch=c(18,24,22), xlab="Attractiveness", ylab="Mean Number of Labs Attended", main="Interaction Plot")
+fit1<-aov(labs~attract*time, data=data)
+summary(fit1)
+print(model.tables(fit1, type="means"))
+fit2<-lm(labs~attract*time, data=data)
+fit2a<-anova(fit2)
+fit2a
+pairwise.t.test(data$lab, data$attract, p.adjust.method="holm")
+pairwise.t.test(data$lab, data$attract, p.adjust.method="bonferroni")
+pairwise.t.test(data$lab, data$attract, p.adjust.method="fdr")
